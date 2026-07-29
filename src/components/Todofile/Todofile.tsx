@@ -5,19 +5,21 @@ import { Todo } from '../../types/Todo';
 type Props = {
   todo: Todo;
   onSelect: (todo: Todo) => void;
+  isSelected: boolean;
 };
 
 export const Todofile: React.FC<Props> = ({ todo, onSelect, isSelected }) => {
   return (
-    <tr data-cy="todo" className="">
+    <tr data-cy="todo">
       <td className="is-vcentered">{todo.id}</td>
-      {todo.completed ? (
-        <span className="icon" data-cy="iconCompleted">
-          <i className="fas fa-check" />
-        </span>
-      ) : (
-        <td className="is-vcentered" />
-      )}
+
+      <td className="is-vcentered">
+        {todo.completed && (
+          <span className="icon" data-cy="iconCompleted">
+            <i className="fas fa-check" />
+          </span>
+        )}
+      </td>
 
       <td className="is-vcentered is-expanded">
         <p

@@ -3,9 +3,9 @@ import { Todo } from '../../types/Todo';
 import { Todofile } from '../Todofile/Todofile';
 
 interface Props {
-  todos: Todo[];
+  array: Todo[];
   selectedTodo: Todo | null;
-  onSelect: (todo: Todo) => void;
+  onselect: (todo: Todo) => void;
 }
 
 export const TodoList: React.FC<Props> = ({
@@ -29,16 +29,14 @@ export const TodoList: React.FC<Props> = ({
       </thead>
 
       <tbody>
-        {array.map(todo => {
-          return (
-            <Todofile
-              key={todo.id}
-              todo={todo}
-              onSelect={onselect}
-              isSelected={selectedTodo?.id === todo.id}
-            />
-          );
-        })}
+        {array.map(todo => (
+          <Todofile
+            key={todo.id}
+            todo={todo}
+            onSelect={onselect}
+            isSelected={selectedTodo?.id === todo.id}
+          />
+        ))}
       </tbody>
     </table>
   );

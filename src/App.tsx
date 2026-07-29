@@ -12,11 +12,11 @@ import { getTodos } from './api';
 
 export const App: React.FC = () => {
   const [array, setArray] = useState<Todo[]>([]);
-  const [loading, setloading] = useState(true);
-  const [newarray, setnewarray] = useState<Todo | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [newarray, setNewarray] = useState<Todo | null>(null);
 
-  const [matching, setmatching] = useState('all');
-  const [titling, settitling] = useState('');
+  const [matching, setMatching] = useState('all');
+  const [titling, setTitling] = useState('');
 
   useEffect(() => {
     getTodos()
@@ -24,7 +24,7 @@ export const App: React.FC = () => {
         setArray(fetchedTodos);
       })
       .finally(() => {
-        setloading(false);
+        setLoading(false);
       });
   }, []);
 
@@ -42,39 +42,37 @@ export const App: React.FC = () => {
   });
 
   return (
-    <>
-      <div className="section">
-        <div className="container">
-          <div className="box">
-            <h1 className="title">Todos:</h1>
+    <div className="section">
+      <div className="container">
+        <div className="box">
+          <h1 className="title">Todos:</h1>
 
-            <div className="block">
-              <TodoFilter
-                setmatching={setmatching}
-                matching={matching}
-                titling={titling}
-                settitling={settitling}
+          <div className="block">
+            <TodoFilter
+              setMatching={setMatching}
+              matching={matching}
+              titling={titling}
+              setTitling={setTitling}
+            />
+          </div>
+
+          <div className="block">
+            {loading ? (
+              <Loader />
+            ) : (
+              <TodoList
+                array={PreparedArray}
+                onselect={setNewarray}
+                selectedTodo={newarray}
               />
-            </div>
-
-            <div className="block">
-              {loading ? (
-                <Loader />
-              ) : (
-                <TodoList
-                  array={PreparedArray}
-                  selectedTodo={newarray}
-                  onselect={setnewarray}
-                />
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>
+
       {newarray && (
-        <TodoModal selectedobj={newarray} OnClose={() => setnewarray(null)} />
+        <TodoModal selectedobj={newarray} onClose={() => setNewarray(null)} />
       )}
-      ;
-    </>
+    </div>
   );
 };

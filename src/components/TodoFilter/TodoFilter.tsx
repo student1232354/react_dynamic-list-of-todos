@@ -1,25 +1,27 @@
+import React from 'react';
+
 type Props = {
-  setmatching: (matching: string) => void;
+  setMatching: (matching: string) => void;
   matching: string;
   titling: string;
-  settitling: (titling: string) => void;
+  setTitling: (titling: string) => void;
 };
 
 export const TodoFilter: React.FC<Props> = ({
-  setmatching,
+  setMatching,
   matching,
   titling,
-  settitling,
+  setTitling,
 }) => {
   return (
     <form className="field has-addons" onSubmit={e => e.preventDefault()}>
       <p className="control">
-        <span
-          className="select"
-          value={matching}
-          onChange={e => setmatching(e.target.value)}
-        >
-          <select data-cy="statusSelect">
+        <span className="select">
+          <select
+            data-cy="statusSelect"
+            value={matching}
+            onChange={e => setMatching(e.target.value)}
+          >
             <option value="all">All</option>
             <option value="active">Active</option>
             <option value="completed">Completed</option>
@@ -34,23 +36,22 @@ export const TodoFilter: React.FC<Props> = ({
           className="input"
           placeholder="Search..."
           value={titling}
-          onChange={e => settitling(e.target.value)}
+          onChange={e => setTitling(e.target.value)}
         />
         <span className="icon is-left">
           <i className="fas fa-magnifying-glass" />
         </span>
 
-        <span className="icon is-right" style={{ pointerEvents: 'all' }}>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          {titling && (
+        {titling && (
+          <span className="icon is-right" style={{ pointerEvents: 'all' }}>
             <button
               data-cy="clearSearchButton"
               type="button"
               className="delete"
-              onClick={() => settitling('')}
+              onClick={() => setTitling('')}
             />
-          )}
-        </span>
+          </span>
+        )}
       </p>
     </form>
   );

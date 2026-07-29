@@ -5,24 +5,24 @@ import { User } from '../../types/User';
 import { getUser } from '../../api';
 
 type Props = {
-  todo: Todo;
+  selectedobj: Todo;
   onClose: () => void;
 };
 
-export const TodoModal: React.FC<Props> = ({ selectedobj, OnClose }) => {
-  const [newobj, setobj] = useState<User | null>(null);
+export const TodoModal: React.FC<Props> = ({ selectedobj, onClose }) => {
+  const [newobj, setObj] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     getUser(selectedobj.userId)
-      .then(fetchedUser => setobj(fetchedUser))
+      .then(fetchedUser => setObj(fetchedUser))
       .finally(() => setLoading(false));
   }, [selectedobj.userId]);
 
   return (
     <div className="modal is-active" data-cy="modal">
-      <div className="modal-background" />
+      <div className="modal-background" onClick={onClose} />
 
       {loading ? (
         <Loader />
@@ -36,12 +36,11 @@ export const TodoModal: React.FC<Props> = ({ selectedobj, OnClose }) => {
               Todo #{selectedobj.id}
             </div>
 
-            {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
             <button
               type="button"
               className="delete"
               data-cy="modal-close"
-              onClick={() => OnClose(null)}
+              onClick={onClose}
             />
           </header>
 
@@ -51,7 +50,6 @@ export const TodoModal: React.FC<Props> = ({ selectedobj, OnClose }) => {
             </p>
 
             <p className="block" data-cy="modal-user">
-              {/* <strong className="has-text-success">Done</strong> */}
               {selectedobj.completed ? (
                 <strong className="has-text-success">Done</strong>
               ) : (
